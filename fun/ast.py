@@ -48,7 +48,7 @@ class Node():
 		self.chilren = children
 		for child in children:
 			child.parent = self
-	# 个别节点需要单独实现
+	# 暂时废止
 	def _currying(self, try_env):
 		if self.type == 'Identifier':
 			value = try_env.get(self.id)
@@ -435,7 +435,9 @@ class Transform(Node):
 			[
 				(obj.Generator, obj.Fun),
 				(obj.Generator, obj.Table),
-				#(obj.Table,),
+				# to do
+				#(obj.Table, obj.Fun),
+				#(obj.Table, obj.Table),
 			]
 		)
 		clear(self, self.left, self.right)
@@ -463,8 +465,9 @@ class Filter(Node):
 			[
 				(obj.Generator, obj.Fun),
 				(obj.Generator, obj.Table),
-				#(obj.Table, obj.Table),
+				# to do
 				#(obj.Table, obj.Fun),
+				#(obj.Table, obj.Table),
 			]
 		)
 		clear(self, self.left, self.right)
@@ -771,7 +774,6 @@ class Always(Node, Readonly):
 	def _copy(self):
 		return Always(self.line_no)
 
-# 即是AST，也是Object
 class TableStatementNode(Node):
 	def __init__(self, line_no, items):
 		super(TableStatementNode, self).__init__(line_no)

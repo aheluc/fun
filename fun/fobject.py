@@ -3,11 +3,6 @@ from fun.exception import ReturnMessage, StopMessage, RuntimeException
 
 intent = '    '
 
-def binary_opt_py2fun(func):
-	def wrapper(self, right, cls):
-		return cls._py2fun(func(self, right))
-	return wrapper
-
 class FinalValue:
 	def _type(self):
 		return type(self).__name__
@@ -195,8 +190,6 @@ class Generator(Fun):
 		return self.initializer
 	def _reload(self, initializer, pattern=None):
 		return Generator([stmt._copy() for stmt in self.body], initializer.value._copy())
-	#def _unload(self):
-	#	return Fun([stmt._copy() for stmt in self.body])
 	def _map(self, right, pattern=None):
 		return Transform(self._copy(), right.value._copy())
 	def _filter(self, right, pattern=None):
@@ -239,7 +232,7 @@ class Generator(Fun):
 			try:
 				for step in range(self.start_step, len(self.body)):
 					self.body[step].eval(env)
-				# 如果不是从头执行，则可以多执行一次
+				# 如果不是从头执行，则可以多执行一次(restart if it is not the first time to be called)
 				if self.start_step > 0:
 					for step, stmt in enumerate(self.body):
 						stmt.eval(env)
@@ -403,7 +396,7 @@ class Table(Obj):
 			return self.always
 	def _code(self, scope=0):
 		events = InterpreterScope.get_stack()
-		# 防止循环调用
+		# 防止循环引用时，无限生成代码
 		if [event for event in events if event.name == 'table_code' and event.info == self]:
 			return '[...]'
 		with InterpreterScope(StackEvent('table_code', self)):
