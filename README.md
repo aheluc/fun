@@ -1,11 +1,13 @@
 # Fun
 Fun是一个**基于Python的脚本语言**。
+
 擅长处理数据流，其高度的随意性和动态性可以使其代码精简而灵活。
 
 ## 特点(Feature)
 
 ### 自动lambda化(auto lambda)
 当一个表达式中的存在变量未定义时，则整个表达式变为lambda表达式。
+
 `fun = x * y;`
 实质上等价于
 ```
@@ -34,4 +36,5 @@ fun = {
 ## 使用
 
 使用Fun不需要任何Python的第三方库。
-你可以在[Fun 在线执行](http://sdbotwechat.zicp.io/fun_online)上尝试Fun。
+
+你可以在[Fun 在线执行](http://sdbotwechat.zicp.io/fun_online)上尝试执行Fun。
