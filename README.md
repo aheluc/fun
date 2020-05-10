@@ -33,7 +33,27 @@ fun = {
 ### 生成器可以展开为表(a generator can unfold into a table)
 你也可以这样定义一个表：`table = [..range << [0, 5]];`
 
-## 使用
+### 函数可以在另一个函数内展开(function unfolding)
+```
+fun = {
+    x = x + 1;
+    x -> print;
+};
+another_fun = {
+    x = 1;
+    ..fun;
+};
+```
+以此定义的another_fun实际上等价于
+```
+another_fun = {
+    x = 1;
+    x = x + 1;
+    x -> print;
+};
+```
+
+## 使用(Usage)
 
 使用Fun不需要任何Python的第三方库。
 
