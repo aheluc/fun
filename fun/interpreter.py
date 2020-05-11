@@ -28,7 +28,9 @@ def repl():
 			stdout.append('line: {}, error: {}'.format(e.line_no, e.info))
 		except CodeControlMessage as ret:
 			stdout.append('不可在函数外使用返回或引发生成器终止')
-		print('\n'.join(stdout))
+		output = '\n'.join(stdout)
+		if output:
+			print(output)
 		stdout.clear()
 
 def repl_online(code):

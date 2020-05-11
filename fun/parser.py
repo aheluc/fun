@@ -62,7 +62,6 @@ def unary_operator(tokens, precedences):
 
 def detect(tokens, left, precedences):
 	token = tokens.consume('DETECT')
-	# 优先级永远低于后部的
 	right = expression(tokens, precedences.get(token.value, 0))
 	if right is not None:
 		return ast.Detect(token.line_no, left, right)
@@ -70,7 +69,6 @@ def detect(tokens, left, precedences):
 
 def transform(tokens, left, precedences):
 	token = tokens.consume('TRANS')
-	# 优先级永远低于后部的
 	right = expression(tokens, precedences.get(token.value, 0))
 	if right is not None:
 		return ast.Transform(token.line_no, left, right)
@@ -78,7 +76,6 @@ def transform(tokens, left, precedences):
 
 def filter(tokens, left, precedences):
 	token = tokens.consume('FILTER')
-	# 优先级永远低于后部的
 	right = expression(tokens, precedences.get(token.value, 0))
 	if right is not None:
 		return ast.Filter(token.line_no, left, right)
@@ -86,7 +83,6 @@ def filter(tokens, left, precedences):
 
 def reduce(tokens, left, precedences):
 	token = tokens.consume('REDUCE')
-	# 优先级永远低于后部的
 	right = expression(tokens, precedences.get(token.value, 0))
 	if right is not None:
 		return ast.Reduce(token.line_no, left, right)
@@ -172,7 +168,6 @@ def incorrect_always(tokens, _):
 
 def call(tokens, left, precedences):
 	token = tokens.consume('CALL')
-	# 优先级永远低于后部
 	right = expression(tokens, precedences.get(token.value, 0))
 	if right is None:
 		raise ParserException('右侧调用函数 {0} 缺失'.format(token.value), token.line_no)
@@ -330,7 +325,7 @@ def return_statement(tokens):
 		tokens.consume('SEMICOLON')
 		return ast.Return(tokens.current.line_no, right)
 	else:
-		raise ParserException('在函数外使用loop', tokens.current.line_no)
+		raise ParserException('在函数外使用return', tokens.current.line_no)
 
 statement = {
 	'CALL': [
